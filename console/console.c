@@ -14,7 +14,10 @@ void clear_terminal() {
 }
 
 void print_character(char c) {
-  if (VGA_BYTES_PER_CHARACTER == 2) {
+  if (c == '\n') {
+    terminal_position = terminal_position - (terminal_position % VGA_WIDTH) + VGA_WIDTH;
+  }
+  else if (VGA_BYTES_PER_CHARACTER == 2) {
     VGA_BUFFER[terminal_position * 2] = c;
     VGA_BUFFER[(terminal_position * 2) + 1] = 0x07;
     terminal_position += 1;
