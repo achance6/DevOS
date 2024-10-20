@@ -14,16 +14,16 @@ void clear_terminal() {
 }
 
 void print_character(char c) {
-  if (c == '\n') {
-    terminal_position = terminal_position - (terminal_position % VGA_WIDTH) + VGA_WIDTH;
+  if (VGA_BYTES_PER_CHARACTER != 2) {
+    return;
   }
-  else if (VGA_BYTES_PER_CHARACTER == 2) {
+  if (c == '\n') {
+    terminal_position =
+      terminal_position - (terminal_position % VGA_WIDTH) + VGA_WIDTH;
+  } else {
     VGA_BUFFER[terminal_position * 2] = c;
     VGA_BUFFER[(terminal_position * 2) + 1] = 0x07;
     terminal_position += 1;
-  }
-  else {
-    // abort();
   }
 }
 
