@@ -4,7 +4,7 @@
 static const int VGA_WIDTH = 80;
 static const int VGA_HEIGHT = 25;
 static const int VGA_BYTES_PER_CHARACTER = 2;
-static char* const VGA_BUFFER = (char*) 0xb8000;
+
 
 void clear_terminal();
 void print_character(char c);
