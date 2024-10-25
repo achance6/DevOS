@@ -4,7 +4,7 @@ static char* const VGA_BUFFER = (char*) 0xb8000;
 static int terminal_position = 0;
 
 void clear_terminal() {
-  for (int i = 0; i < VGA_WIDTH * VGA_HEIGHT - 1; i++) {
+  for (int i = 0; i < VGA_WIDTH * VGA_HEIGHT - 1; i += VGA_BYTES_PER_CHARACTER) {
     VGA_BUFFER[i] = '\0';
     VGA_BUFFER[i + 1] = 0x07;
   }
