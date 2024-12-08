@@ -34,4 +34,6 @@ void print_string_with_color(char* str, VGA_Color bg_color, VGA_Color font_color
 void print_line_with_color(char* str, VGA_Color bg_color, VGA_Color font_color);
 void set_terminal_font_color(VGA_Color color);
 void set_terminal_background_color(VGA_Color color);
+void update_cursor();
+
 #endif
