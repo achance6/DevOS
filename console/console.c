@@ -40,8 +40,7 @@ void print_character_with_color(char c, VGA_Color bg_color, VGA_Color font_color
     break;
     
   case '\t':
-    int spaces_to_next_tab = terminal_position % spaces_in_tab;
-    terminal_position += (spaces_to_next_tab == 0) ? spaces_in_tab : spaces_to_next_tab;
+    terminal_position += spaces_in_tab - (terminal_position % spaces_in_tab);
     break;
     
   case '\b':
