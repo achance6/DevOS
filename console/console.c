@@ -9,11 +9,12 @@ static VGA_Color terminal_font_color = LIGHT_GRAY;
 // Default background color is black
 static VGA_Color terminal_background_color = BLACK;
 static int spaces_in_tab = 8;
+static const VGA_Color default_color = LIGHT_GRAY;
 
 void clear_terminal() {
   for (int i = 0; i < VGA_WIDTH * VGA_HEIGHT - 1; i += VGA_BYTES_PER_CHARACTER) {
     VGA_BUFFER[i] = '\0';
-    VGA_BUFFER[i + 1] = 0x07;
+    VGA_BUFFER[i + 1] = LIGHT_GRAY;
   }
   terminal_position = 0;
 
@@ -46,9 +47,13 @@ void print_character_with_color(char c, VGA_Color bg_color, VGA_Color font_color
   case '\b':
     terminal_position -= (terminal_position == 0) ? 0 : 1;
     VGA_BUFFER[terminal_position * VGA_BYTES_PER_CHARACTER] = '\0';
-    VGA_BUFFER[(terminal_position * VGA_BYTES_PER_CHARACTER) + 1] = 0x07;
+    VGA_BUFFER[(terminal_position * VGA_BYTES_PER_CHARACTER) + 1] = LIGHT_GRAY;
     break;
 
+  case '\r':
+    terminal_position -= terminal_position % VGA_WIDTH;
+    break;
+    
   default:
     VGA_BUFFER[terminal_position * VGA_BYTES_PER_CHARACTER] = c;
     VGA_BUFFER[(terminal_position * VGA_BYTES_PER_CHARACTER) + 1] = (bg_color << 4 | font_color);
