@@ -8,6 +8,7 @@ static int terminal_position = 0;
 static VGA_Color terminal_font_color = LIGHT_GRAY;
 // Default background color is black
 static VGA_Color terminal_background_color = BLACK;
+static int spaces_in_tab = 8;
 
 void clear_terminal() {
   for (int i = 0; i < VGA_WIDTH * VGA_HEIGHT - 1; i += VGA_BYTES_PER_CHARACTER) {
@@ -36,8 +37,8 @@ void print_character_with_color(char c, VGA_Color bg_color, VGA_Color font_color
     terminal_position += VGA_WIDTH - (terminal_position % VGA_WIDTH);
   }
   else if (c =='\t') {
-    int space_to_tab = terminal_position % 8;
-    terminal_position += (space_to_tab == 0) ? 8 : space_to_tab;
+    int spaces_to_next_tab = terminal_position % spaces_in_tab;
+    terminal_position += (spaces_to_next_tab == 0) ? spaces_in_tab : spaces_to_next_tab;
   }
   else {
     VGA_BUFFER[terminal_position * VGA_BYTES_PER_CHARACTER] = c;
