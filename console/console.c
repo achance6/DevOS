@@ -33,9 +33,13 @@ void print_line(char* str) {
 
 void print_character_with_color(char c, VGA_Color bg_color, VGA_Color font_color) {
   if (c == '\n') {
-    terminal_position =
-      terminal_position - (terminal_position % VGA_WIDTH) + VGA_WIDTH;
-  } else {
+    terminal_position += VGA_WIDTH - (terminal_position % VGA_WIDTH);
+  }
+  else if (c =='\t') {
+    int space_to_tab = terminal_position % 8;
+    terminal_position += (space_to_tab == 0) ? 8 : space_to_tab;
+  }
+  else {
     VGA_BUFFER[terminal_position * VGA_BYTES_PER_CHARACTER] = c;
     VGA_BUFFER[(terminal_position * VGA_BYTES_PER_CHARACTER) + 1] = (bg_color << 4 | font_color);
     terminal_position++;
